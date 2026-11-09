@@ -1,0 +1,41 @@
+image: anthonyappetiser/baseplate-php8.1:latest
+
+# Pick zero or more services to be used on all builds.
+# Only needed when using a docker container to run your tests in.
+# Check out: https://docs.gitlab.com/ee/ci/services/index.html
+services:
+  - mysql:8.0
+
+variables:
+  MYSQL_DATABASE: testing
+  MYSQL_ROOT_PASSWORD: secret
+  XDEBUG_MODE: coverage
+
+# This folder is cached between builds
+# https://docs.gitlab.com/ee/ci/yaml/index.html#cache
+cache:
+  paths:
+    - vendor/
+    - node_modules/
+
+stages:
+  - test
+
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "production"'
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: always
+
+before_script:
+  - cp .env.testing.example .env
+  - composer install
+  - php artisan key:generate
+  - php artisan migrate
+  - php artisan db:seed
+
+unit_test:
+  stage: test
+  script:
+    - php artisan test --coverage

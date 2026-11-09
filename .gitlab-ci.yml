@@ -1,0 +1,92 @@
+include:
+  - project: 'appetiser/baseplate/ai-assistant-for-gitlab'
+    ref: main
+    file: '.gitlab-ci.yml'
+
+stages:
+  - security
+  - test
+
+# Cache libraries between jobs
+cache:
+  key: $CI_COMMIT_REF_SLUG-$CI_JOB_NAME
+  paths:
+    - vendor/
+    - node_modules/
+  policy: pull-push
+
+.setup_php: &setup_php
+  - apt-get install -y --fix-missing lsb-release apt-transport-https ca-certificates software-properties-common gnupg
+  - wget -qO /etc/apt/trusted.gpg.d/sury-php.gpg https://packages.sury.org/php/apt.gpg
+  - sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list'
+  - apt-get update -y
+  - apt-get install -y --fix-missing php8.3
+
+.install_composer: &install_composer
+  - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+  - php composer-setup.php --install-dir=/usr/local/bin --filename=composer --version=2.6.6
+
+before_script:
+  - echo "Apt update..."
+  - apt update -y
+
+security_audit:
+  stage: security
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "production"'
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_PIPELINE_SOURCE != "schedule"'
+      when: always
+
+  script:
+    - echo "Running composer security audit..."
+    - *setup_php
+    - apt-get install -y --fix-missing php8.3-{common,curl,cli,mbstring,zip}
+    - *install_composer
+    - composer audit --locked
+
+test:
+  stage: test
+
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "main" || $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "staging" || $CI_COMMIT_BRANCH == "production"'
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_PIPELINE_SOURCE != "schedule"'
+      when: always
+
+  script:
+    # Setup PHP
+    - *setup_php
+    - apt-get install -y --fix-missing php8.3-{common,mysql,xml,xmlrpc,curl,gd,imagick,cli,dev,imap,mbstring,opcache,soap,zip,redis,intl,bcmath}
+
+    # Install Composer
+    - *install_composer
+
+    # Preconfigure MySQL to avoid password prompt
+    - echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
+    - echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
+
+    # Install MySQL
+    - wget https://dev.mysql.com/get/mysql-apt-config_0.8.35-1_all.deb
+    - DEBIAN_FRONTEND=noninteractive apt-get install -y ./mysql-apt-config_0.8.35-1_all.deb
+    - apt-get update
+    - DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
+
+    # Start MySQL service
+    - /usr/sbin/mysqld --daemonize --user=root
+
+    # Ensure MySQL is running and create the database
+    - mysqladmin -u root -proot version
+    - mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS testing;"
+
+    # Set up the application
+    - cp .env.ci .env
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - php artisan key:generate
+    - php artisan migrate
+    - php artisan db:seed
+    - php artisan test --parallel --processes=3

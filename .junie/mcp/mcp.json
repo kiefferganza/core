@@ -1,0 +1,20 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/reidsolon/Library/Application Support/Herd/bin/php83",
+            "args": [
+                "/Users/reidsolon/Desktop/APPETISER_APPS/projects/backend-baseplate/core/artisan",
+                "boost:mcp"
+            ]
+        },
+        "herd": {
+            "command": "/Users/reidsolon/Library/Application Support/Herd/bin/php83",
+            "args": [
+                "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
+            ],
+            "env": {
+                "SITE_PATH": "/Users/reidsolon/Desktop/APPETISER_APPS/projects/backend-baseplate/core"
+            }
+        }
+    }
+}

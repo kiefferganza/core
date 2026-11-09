@@ -1,0 +1,200 @@
+{
+    "version": "4.0.0",
+    "modules": [
+        {
+            "name": "AdminModule",
+            "description": "Provides admin users and admin authentication.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/admin-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/admin-module/-/blob/main/readme.md",
+            "dependencies": ["MediaModule", "AuthModule"]
+        },
+        {
+            "name": "AppSettingsModule",
+            "description": "Provides App Versioning and Page Settings",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/app-settings-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/app-settings-module/-/blob/main/readme.md",
+            "dependencies": ["AuthModule"]
+        },
+        {
+            "name": "AuthModule",
+            "description": "Provides authentication",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/auth-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/auth-module/-/blob/main/readme.md",
+            "dependencies": ["MediaModule", "SmsModule", "PresignedModule"]
+        },
+        {
+            "name": "AWSToolsModule",
+            "description": "Allows interaction with AWS",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/aws-tools-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/aws-tools-module/-/blob/main/readme.md"
+        },
+        {
+            "name": "BlockingModule",
+            "description": "Provides blocking usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/blocking-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/blocking-module/-/blob/main/readme.md",
+            "dependencies": ["AuthModule"]
+        },
+        {
+            "name": "CategoryModule",
+            "description": "Provides category usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/category-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/category-module/-/blob/main/readme.md"
+        },
+        {
+            "name": "ChatModule",
+            "description": "Provides Ably chat usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/chat-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/chat-module/-/blob/main/readme.md",
+            "dependencies": ["AuthModule", "BlockingModule", "PresignedModule"]
+        },
+        {
+            "name": "CommentModule",
+            "description": "Provides comments usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/comment-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/comment-module/-/blob/main/readme.md",
+            "dependencies": ["AuthModule"]
+        },
+        {
+            "name": "EmailWaitlistModule",
+            "description": "Provides email waitlist features.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/email-waitlist-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/email-waitlist-module/-/blob/main/README.md"
+        },
+        {
+            "name": "FAQModule",
+            "description": "Provides FAQs features.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/faq-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/faq-module/-/blob/main/readme.md"
+        },
+        {
+            "name": "FavoriteModule",
+            "description": "Provides favorite usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/favorites-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/favorites-module/-/blob/main/README.md",
+            "dependencies": ["AuthModule"]
+        },
+        {
+            "name": "IAPModule",
+            "description": "Provides In-App Purchase usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/iap-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/iap-module/-/blob/main/README.md"
+        },
+        {
+            "name": "JobModule",
+            "description": "Provides job offers usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/job-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/job-module/-/blob/main/readme.md",
+            "dependencies": [
+                "AuthModule",
+                "CategoryModule",
+                "ReportingModule",
+                "FavoriteModule",
+                "LocationModule",
+                "CommentModule",
+                "PresignedModule"
+            ]
+        },
+        {
+            "name": "LandingPageUtils",
+            "description": "Provides Contact Us and Waitlist API and filament screens.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/landing-page-utils",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/landing-page-utils/-/blob/main/README.md"
+        },
+        {
+            "name": "LocationModule",
+            "description": "Provides location usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/location-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/location-module/-/blob/main/readme.md"
+        },
+        {
+            "name": "MarketplaceModule",
+            "description": "Provides marketplace features.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/marketplace-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/marketplace-module/-/blob/main/readme.md",
+            "dependencies": ["AuthModule", "PaymentModule", "MediaModule", "PresignedModule"]
+        },
+        {
+            "name": "MediaModule",
+            "description": "Provides media usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/media-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/media-module/-/blob/main/readme.md"
+        },
+        {
+            "name": "NotificationModule",
+            "description": "Provides notification usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/notification-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/notification-module/-/blob/main/readme.md"
+        },
+        {
+            "name": "PaymentModule",
+            "description": "Provides payment usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/payment-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/payment-module/-/blob/main/readme.md",
+            "dependencies": ["AuthModule"]
+        },
+        {
+            "name": "PostModule",
+            "description": "Provides posts usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/post-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/post-module/-/blob/main/README.md",
+            "dependencies": [
+                "AuthModule",
+                "FavoriteModule",
+                "ReportingModule",
+                "CommentModule",
+                "PresignedModule"
+            ]
+        },
+        {
+            "name": "PresignedModule",
+            "description": "Provides pre-signed usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/presigned-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/presigned-module/-/blob/main/README.md"
+        },
+        {
+            "name": "PushNotificationModule",
+            "description": "Provides push notification usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/push-notification-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/push-notification-module/-/blob/main/readme.md",
+            "dependencies": ["AuthModule"]
+        },
+        {
+            "name": "ReportingModule",
+            "description": "Provides reporting usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/reporting-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/reporting-module/-/blob/main/readme.md",
+            "dependencies": ["AuthModule"]
+        },
+        {
+            "name": "ReviewModule",
+            "description": "Provides review features.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/review-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/review-module/-/blob/main/readme.md"
+        },
+        {
+            "name": "SearchLocationModule",
+            "description": "Provides Google Places usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/search-location-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/search-location-module/-/blob/main/readme.md"
+        },
+        {
+            "name": "SmsModule",
+            "description": "Provides SMS usage",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/sms-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/sms-module/-/blob/main/readme.md"
+        },
+        {
+            "name": "SocialLoginModule",
+            "description": "Provides social login usage.",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/social-login-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/social-login-module/-/blob/main/readme.md"
+        },
+        {
+            "name": "VideoTranscoderModule",
+            "description": "Provides Video on Demand feature using AWS Media Convert",
+            "repo": "git@gitlab.com:appetiser/baseplate/backend/video-transcoder-module.git",
+            "doc": "https://gitlab.com/appetiser/baseplate/backend/video-transcoder-module/-/blob/main/readme.md"
+        }
+    ]
+}
